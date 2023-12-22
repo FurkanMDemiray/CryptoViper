@@ -8,6 +8,11 @@
 import Foundation
 
 
+enum NetworkError: Error {
+    case NetworkaFail
+    case ParsingFail
+}
+
 protocol AnyPresenter {
 
     var router: AnyRouter? { get set }
