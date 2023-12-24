@@ -16,7 +16,6 @@ protocol AnyView {
 
     var presenter: AnyPresenter? { get set }
 
-
     func update(with cryptos: [Crypto])
     func update(with error: String)
 
@@ -30,15 +29,18 @@ class CryptoViewController: UIViewController, AnyView, UITableViewDelegate, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .yellow
         tableView.delegate = self
         tableView.dataSource = self
+        view.addSubview(tableView)
+        view.addSubview(messageLabel)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
         messageLabel.frame = CGRect(x: view.frame.width / 2 - 100, y: view.frame.height / 2 - 25, width: 200, height: 50)
+
     }
 
     private let tableView: UITableView = {
@@ -54,7 +56,7 @@ class CryptoViewController: UIViewController, AnyView, UITableViewDelegate, UITa
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 24, weight: .medium)
         label.textColor = .black
-        label.isHidden = true
+        label.isHidden = false
         return label
     }()
 
@@ -68,7 +70,12 @@ class CryptoViewController: UIViewController, AnyView, UITableViewDelegate, UITa
     }
 
     func update(with error: String) {
-        <#code#>
+        DispatchQueue.main.async {
+            self.cryptos = []
+            self.messageLabel.text = error
+            self.messageLabel.isHidden = false
+            self.tableView.isHidden = true
+        }
     }
 
 
@@ -77,7 +84,15 @@ class CryptoViewController: UIViewController, AnyView, UITableViewDelegate, UITa
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.text = cryptos[indexPath.row].currency
+        content.secondaryText = cryptos[indexPath.row].price
+        cell.contentConfiguration = content
+        cell.backgroundColor = .systemTeal
+
+        return cell
     }
 
 }
