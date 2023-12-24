@@ -7,6 +7,8 @@
 
 import Foundation
 
+// presenter is the middleman between view and interactor
+// talks to view and interactor and router
 
 enum NetworkError: Error {
     case NetworkaFail

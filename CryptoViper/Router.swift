@@ -9,7 +9,8 @@ import Foundation
 
 
 // Entry Point
-
+// Router is the entry point of the VIPER architecture. It is responsible for creating the module and navigating between modules.
+// talks to presenter
 
 protocol AnyRouter {
 

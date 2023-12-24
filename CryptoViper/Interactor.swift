@@ -7,6 +7,8 @@
 
 import Foundation
 
+// interactor is the middleman between presenter and data
+// talks to presenter
 
 protocol AnyInteractor {
     var presenter: AnyPresenter? { get set }
